@@ -8,7 +8,7 @@ class Form_News_Edit extends Forms_List
     $this->col('col1')
       ->add('name')
       ->add('rew_id')
-      ->add('timestamp', array ('attr' => array ('class' => 'datepicker'), 'value' => date('d.m.Y')));
+      ->add('timestamp', 'date', date('d.m.Y'));
       
     $this->col('col2')
       ->add('meta_description')
