@@ -10,7 +10,7 @@ class Cms_Model_News extends ORM
   {
     switch ($column) {
       case 'content' :
-        return cms::prepare_content($this, nl2br(parent::__get($column)));
+        return nl2br(cms::prepare_content(parent::__get($column), array ('orm_object' => $this)));
     }
     
     return parent::__get($column);
@@ -18,12 +18,12 @@ class Cms_Model_News extends ORM
   
   public function list_count_all()
   {
-    return $this->where('cms_status', '=', 1)->count_all();
+    return $this->set_show_conditions()->count_all();
   }
   
   public function list_all($limit = FALSE, $offset = FALSE)
   {
-    $this->where('cms_status', '=', 1);
+    $this->set_show_conditions();
     
     if ($limit !== FALSE)
       $this->limit($limit);
@@ -32,6 +32,13 @@ class Cms_Model_News extends ORM
       $this->offset($offset);
     
     return $this->find_all();
+  }
+  
+  public function set_show_conditions()
+  {
+    $this->where('cms_status', '=', 1);
+    
+    return $this;
   }
   
   public function get_url()
